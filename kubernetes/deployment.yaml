@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: substractservice-deploy
+  namespace: calculator
+spec:
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    
+  replicas: 1
+  
+  selector:
+    matchLabels:
+      app: substractserviceapp
+  
+  template:
+    metadata:
+      labels:
+        app: substractserviceapp
+    spec:
+      volumes:
+      - name: docker-insecure-registries
+        configMap:
+          name: harbor-allow-insecure-registries
+          items:
+            - key: daemon.json
+              path: daemon.json
+      - name: cache
+        hostPath:
+          path: /tmp
+          type: Directory
+      imagePullSecrets:
+      - name: harbor-regcred
+      containers:
+      - name: substractserviceapp
+        image: 1.2.3.4/calc/substractservice:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: cache
+          mountPath: /var/lib/docker
+        - name: docker-insecure-registries
+          mountPath: /etc/docker/daemon.json
+          subPath: daemon.json
+        # envFrom:
+        #   - configMapRef:
+        #       name: foobar-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: substractservice
+  namespace: calculator
+spec:
+  selector:
+    app: substractserviceapp
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP # LoadBalancer # NodePort # 
