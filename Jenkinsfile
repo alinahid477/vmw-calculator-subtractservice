@@ -45,7 +45,7 @@ spec:
 ''') {
     node(POD_LABEL) {
         stage("GIT") {
-          git credentialsId: 'github-cred', url: 'https://github.com/alinahid477/vmw-calculator-subtractservice.git'
+          git credentialsId: 'github-cred', branch: 'main', url: 'https://github.com/alinahid477/vmw-calculator-subtractservice.git'
         }
         stage("MAVEN") {
           container('maven') {
