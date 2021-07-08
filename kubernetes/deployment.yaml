@@ -37,7 +37,7 @@ spec:
       - name: harbor-regcred
       containers:
       - name: substractserviceapp
-        image: 1.2.3.4/calc/substractservice:latest
+        image: harbor-svc.haas-422.pez.vmware.com/anahid/substractservice:latest
         ports:
         - containerPort: 8080
         livenessProbe:
