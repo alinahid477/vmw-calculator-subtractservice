@@ -19,6 +19,13 @@ public class HomeController {
     @Autowired
     private SubstractService addService;
 
+    @RequestMapping(value="/subtract", method=RequestMethod.GET)
+    public ResponseEntity<GenericResponseObject> index() {
+        
+        return new ResponseEntity<>(new GenericResponseObject(){ { setSuccess(true); setMessage("Hello again from subtract service. What can I do for you?"); } }, 
+            HttpStatus.OK);     
+    }
+
     @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<GenericResponseObject> index() {
         
