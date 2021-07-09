@@ -1,5 +1,5 @@
 package com.calc.substractservice.services;
 
 public interface SubstractService {
-    public double add(double x, double y);
+    public double subtract(double x, double y);
 }

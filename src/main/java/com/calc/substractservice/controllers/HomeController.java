@@ -17,14 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 
     @Autowired
-    private SubstractService addService;
-
-    @RequestMapping(value="/subtract", method=RequestMethod.GET)
-    public ResponseEntity<GenericResponseObject> index2() {
-        
-        return new ResponseEntity<>(new GenericResponseObject(){ { setSuccess(true); setMessage("Hello again from subtract service. What can I do for you?"); } }, 
-            HttpStatus.OK);     
-    }
+    private SubstractService subtractService;
 
     @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<GenericResponseObject> index() {
@@ -42,10 +35,10 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value="substract", method=RequestMethod.POST)
-    public ResponseEntity<GenericResponseObject> sum(@RequestParam String a, @RequestParam String b) throws NumberFormatException, InterruptedException {
+    @RequestMapping(value="subtract", method=RequestMethod.POST)
+    public ResponseEntity<GenericResponseObject> subtract(@RequestParam String a, @RequestParam String b) throws NumberFormatException, InterruptedException {
         final String sum;
-        double x = this.addService.add(Double.parseDouble(a), Double.parseDouble(b));
+        double x = this.subtractService.subtract(Double.parseDouble(a), Double.parseDouble(b));
         if(x % 1 == 0) {
             sum = "" + (int)x;
         } else {
