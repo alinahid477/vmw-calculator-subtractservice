@@ -84,7 +84,7 @@ spec:
             sh 'ls -la'
             sh 'chmod 777 ./kubectl'
             // sh './kubectl apply -f kubernetes/deployment.yaml'
-            sh '`./kubectl patch deployment substractservice-deploy -p \"{\"spec\": {\"template\": {\"metadata\": { \"labels\": {  \"redeploy\": \"$(date +%s)\"}}}}}\" -n calculator`'
+            sh '''./kubectl patch deployment substractservice-deploy -p "{\"spec\": {\"template\": {\"metadata\": { \"labels\": {  \"redeploy\": \"$(date +%s)\"}}}}}" -n calculator'''
           }
         }
           
